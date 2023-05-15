@@ -23,10 +23,10 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry){
                 registry.addMapping("/api/**")
-                        .allowedOrigins("*")
+                        .allowedOrigins("https://portfolio-fronted.web.app")
                         .allowedMethods("*");
                                 registry.addMapping("/api/**")
-                        .allowedOrigins("*")
+                        .allowedOrigins("https://portfolio-fronted.web.app")
                         .allowedMethods("*");
             }
         };
