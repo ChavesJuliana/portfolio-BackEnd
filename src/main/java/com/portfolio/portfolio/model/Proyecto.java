@@ -22,19 +22,21 @@ import lombok.Setter;
 
 @Getter @Setter
 @Entity
-public class Educacion {
+public class Proyecto {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_educacion;
+    private Long id_proyecto;
     private String nombre;
-    private String institucion;
+    private String descripcion;
+    private String url_proyecto;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fecha_desde;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Nullable
     private LocalDate fecha_hasta;
     private int actualmente;
+    private String url_foto;
     @Column(name = "persona_id_persona")
     private int id_persona;
 }

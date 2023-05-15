@@ -4,6 +4,7 @@
  */
 package com.portfolio.portfolio.service;
 
+import com.portfolio.portfolio.DTO.ExperienciaDTO;
 import com.portfolio.portfolio.model.Experiencia;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface IExperienciaService {
     
     public Experiencia saveExperiencia(Experiencia experiencia);
     public List<Experiencia> getExperiencias();
+    public List<ExperienciaDTO> getAllWithTipo();
     public Experiencia getExperienciaById(Long id);
     public void deleteExperiencia(Long id);
 }

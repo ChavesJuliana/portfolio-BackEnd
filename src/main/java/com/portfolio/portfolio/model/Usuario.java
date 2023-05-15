@@ -31,6 +31,7 @@ public class Usuario {
     private int tipo_usuario;
     @Column(name = "persona_id_persona")
     private int id_persona;
+    private int rol;
    
     
 }

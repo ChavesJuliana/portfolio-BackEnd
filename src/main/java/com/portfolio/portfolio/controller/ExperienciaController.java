@@ -4,7 +4,9 @@
  */
 package com.portfolio.portfolio.controller;
 
+import com.portfolio.portfolio.DTO.ExperienciaDTO;
 import com.portfolio.portfolio.model.Experiencia;
+import com.portfolio.portfolio.model.TipoTrabajo;
 import com.portfolio.portfolio.service.IExperienciaService;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -67,6 +69,24 @@ public class ExperienciaController {
     }
     
     @CrossOrigin(origins = "*")
+    @GetMapping("/getTodosConTipo")
+    public ResponseEntity<?> getAllConTipo() {
+        
+        try {
+            
+           List<ExperienciaDTO> lista = experienciaService.getAllWithTipo();
+           if(lista.isEmpty()){
+               return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("respuesta", "No se encontro alguna experiencia"));
+           }
+           return ResponseEntity.status(HttpStatus.OK).body(lista);
+                        
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap("respuesta", e.getMessage()));
+        }
+            
+    }
+    
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         
@@ -87,7 +107,7 @@ public class ExperienciaController {
                                   @RequestParam LocalDate fecha_desde,
                                   @RequestParam (required = false) LocalDate fecha_hasta,
                                   @RequestParam int actualmente,
-                                  @RequestParam int tipo_trabajo,
+                                  @RequestParam TipoTrabajo tipo_trabajo,
                                   @RequestParam String nombre) {
         
         try {
@@ -100,12 +120,11 @@ public class ExperienciaController {
                         experiencia.setFecha_desde(fecha_desde);
                         experiencia.setFecha_hasta(fecha_hasta);
                         experiencia.setActualmente(actualmente);
-                        experiencia.setTipo_trabajo(tipo_trabajo);
+                        experiencia.setTipoTrabajo(tipo_trabajo);
                         experiencia.setNombre(nombre);
                         Experiencia insertado = experienciaService.saveExperiencia(experiencia);
                         return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonMap("id", insertado.getId_experiencia()));
-
-                        
+                     
                 } else {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("respuesta", "No se encontro la experiencia")); 
                 }

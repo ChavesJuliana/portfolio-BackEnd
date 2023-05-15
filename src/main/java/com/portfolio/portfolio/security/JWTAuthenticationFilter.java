@@ -54,6 +54,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     // Crear objeto con datos que se van a enviar en el cuerpo de la respuesta
     Map<String, Object> responseBody = new HashMap<>();
     responseBody.put("username", userDetails.getUsername());
+    responseBody.put("rol", userDetails.getRol());
     responseBody.put("token", token);
     
     // Convertir objeto en JSON

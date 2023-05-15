@@ -4,14 +4,13 @@
  */
 package com.portfolio.portfolio.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDate;
+import jakarta.persistence.OneToMany;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,19 +21,16 @@ import lombok.Setter;
 
 @Getter @Setter
 @Entity
-public class Educacion {
+public class TipoTrabajo {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_educacion;
-    private String nombre;
-    private String institucion;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate fecha_desde;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Nullable
-    private LocalDate fecha_hasta;
-    private int actualmente;
-    @Column(name = "persona_id_persona")
-    private int id_persona;
+    private Long id_tipo_trabajo;
+    @Column(name = "nombre")
+    private String nombre_trabajo;
+    
+    //@OneToMany(mappedBy = "tipoTrabajo")
+    //private Set<Experiencia> experiencias;
+
+        
 }

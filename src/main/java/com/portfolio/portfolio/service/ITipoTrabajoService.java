@@ -4,19 +4,15 @@
  */
 package com.portfolio.portfolio.service;
 
-import com.portfolio.portfolio.model.Educacion;
+import com.portfolio.portfolio.model.TipoTrabajo;
 import java.util.List;
 
 /**
  *
  * @author Juli
  */
-public interface IEducacionService {
+public interface ITipoTrabajoService {
     
-   
-    
-    public Educacion saveEducacion(Educacion educacion);
-    public List<Educacion> getAllEducacion();
-    public Educacion getEducacionById(Long id);
-    public void deleteEducacion (Long id);
+    public List<TipoTrabajo> getAll();
+
 }

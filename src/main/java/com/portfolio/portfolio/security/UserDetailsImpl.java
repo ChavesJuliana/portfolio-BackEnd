@@ -59,4 +59,7 @@ public class UserDetailsImpl implements UserDetails {
         return usuario.getUsuario();
     }
     
+    public int getRol(){
+        return usuario.getRol();
+    }
 }

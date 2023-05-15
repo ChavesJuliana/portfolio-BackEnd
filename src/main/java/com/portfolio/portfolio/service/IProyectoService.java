@@ -4,19 +4,17 @@
  */
 package com.portfolio.portfolio.service;
 
-import com.portfolio.portfolio.model.Educacion;
+import com.portfolio.portfolio.model.Proyecto;
 import java.util.List;
 
 /**
  *
  * @author Juli
  */
-public interface IEducacionService {
+public interface IProyectoService {
     
-   
-    
-    public Educacion saveEducacion(Educacion educacion);
-    public List<Educacion> getAllEducacion();
-    public Educacion getEducacionById(Long id);
-    public void deleteEducacion (Long id);
+    public Proyecto saveProyecto(Proyecto proyecto);
+    public List<Proyecto> getProyectos();
+    public Proyecto getProyectoById(Long id);
+    public void deleteProyecto(Long id);
 }

@@ -28,4 +28,18 @@ public class Persona {
     private String descripcion;
     private String url_foto;
     private String titulo;
+    
+    public Persona(){
+    }
+    
+    public Persona(String nombre, String apellido, String descripcion, 
+            String url_foto, String titulo){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.descripcion = descripcion;
+        this.url_foto = url_foto;
+        this.titulo = titulo;
+    }
 }
+
+

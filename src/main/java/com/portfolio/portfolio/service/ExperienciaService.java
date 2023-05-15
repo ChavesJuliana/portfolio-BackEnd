@@ -4,6 +4,7 @@
  */
 package com.portfolio.portfolio.service;
 
+import com.portfolio.portfolio.DTO.ExperienciaDTO;
 import com.portfolio.portfolio.model.Experiencia;
 import com.portfolio.portfolio.repository.ExperienciaRepository;
 import java.util.List;
@@ -41,6 +42,12 @@ public class ExperienciaService implements IExperienciaService{
     public Experiencia getExperienciaById(Long id) {
         Experiencia experiencia = experienciaRepository.findById(id).orElse(null);
         return experiencia;
+    }
+
+    @Override
+    public List<ExperienciaDTO> getAllWithTipo() {
+        List<ExperienciaDTO> listaExperiencias = experienciaRepository.getAllWithTipo();
+        return listaExperiencias;
     }
     
 

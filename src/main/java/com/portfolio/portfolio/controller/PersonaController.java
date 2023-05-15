@@ -6,10 +6,17 @@ package com.portfolio.portfolio.controller;
 
 import com.portfolio.portfolio.model.Persona;
 import com.portfolio.portfolio.service.IPersonaService;
+import com.portfolio.portfolio.service.IStorageService;
+import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  *
@@ -29,16 +38,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/persona")
+@AllArgsConstructor 
 public class PersonaController {
     
     @Autowired
     private IPersonaService personaService;
+    private final IStorageService storageService;
+    private final HttpServletRequest request;
     
     @PostMapping("/crear")
-    public ResponseEntity<?> create(@RequestBody Persona persona) {
-        
+    public ResponseEntity<?> create(@RequestParam("nombre") String nombre,
+                                    @RequestParam("apellido") String apellido,
+                                    @RequestParam("descripcion") String descripcion,
+                                    @RequestParam("titulo") String titulo,
+                                    @RequestParam("file") MultipartFile multipartFile) {
+                
             try {
-                personaService.savePersona(persona);
+                    String path = storageService.store(multipartFile);
+                    String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
+                    String url = ServletUriComponentsBuilder
+                    .fromHttpUrl(host)
+                    .path("/api/persona/media/")
+                    .path(path)
+                    .toUriString();
+            
+                 Persona persona = new Persona(nombre, apellido, descripcion, url, titulo);
+                 personaService.savePersona(persona);
+                 
                 return ResponseEntity.status(HttpStatus.CREATED).body("Persona creada");
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -46,6 +72,18 @@ public class PersonaController {
             
     }
     
+    @CrossOrigin(origins = "*")
+    @GetMapping("/media/{filename:.+}")
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException{
+        Resource file = storageService.loadAsResource(filename);
+        String contentType = Files.probeContentType(file.getFile().toPath());
+            
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_TYPE, contentType)
+                .body(file);
+    }
+        
     @CrossOrigin(origins = "*")
     @GetMapping("/get/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
@@ -80,8 +118,8 @@ public class PersonaController {
                                   @RequestParam String nombre,
                                   @RequestParam String apellido,
                                   @RequestParam String descripcion,
-                                  @RequestParam (required = false) String url_foto,
-                                  @RequestParam String titulo) {
+                                  @RequestParam String titulo,
+                                  @RequestParam(value="file", required = false) MultipartFile multipartFile) {
         
         try {
             
@@ -91,8 +129,17 @@ public class PersonaController {
                         persona.setNombre(nombre);
                         persona.setApellido(apellido);
                         persona.setDescripcion(descripcion);
-                        if(!url_foto.isEmpty()){                            
-                            persona.setUrl_foto(url_foto);
+                        if(multipartFile != null){   
+                            
+                            String path = storageService.store(multipartFile);
+                            String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
+                            String url = ServletUriComponentsBuilder
+                                .fromHttpUrl(host)
+                                .path("/api/persona/media/")
+                                .path(path)
+                                .toUriString();
+                            
+                            persona.setUrl_foto(url);
                         }                      
                         persona.setTitulo(titulo);
                         personaService.savePersona(persona);
