@@ -4,10 +4,7 @@
  */
 package com.portfolio.portfolio.controller;
 
-import com.portfolio.portfolio.DTO.ExperienciaDTO;
-import com.portfolio.portfolio.model.Experiencia;
 import com.portfolio.portfolio.model.Proyecto;
-import com.portfolio.portfolio.service.IExperienciaService;
 import com.portfolio.portfolio.service.IProyectoService;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -33,12 +30,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/proyecto")
+@CrossOrigin(origins = "https://portfolio-fronted.web.app/login")
 public class ProyectoController {
     
     @Autowired
     private IProyectoService proyectoService;
     
-    @CrossOrigin(origins = "*")
     @PostMapping("/crear")
     public ResponseEntity<?> create(@RequestBody Proyecto proyecto) {
         
@@ -51,7 +48,6 @@ public class ProyectoController {
             
     }
     
-    @CrossOrigin(origins = "*")
     @GetMapping("/getTodos")
     public ResponseEntity<?> getAll() {
         
@@ -69,7 +65,6 @@ public class ProyectoController {
             
     }
     
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         
@@ -82,7 +77,6 @@ public class ProyectoController {
             
     }
     
-    @CrossOrigin(origins = "*")
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> edit(@PathVariable Long id,
                                   @RequestParam String nombre,

@@ -31,12 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/conocimiento")
+@CrossOrigin(origins = "https://portfolio-fronted.web.app/login")
 public class ConocimientoController {
     
     @Autowired
     private IConocimientoService conocimientoService;
     
-    @CrossOrigin(origins = "*")
     @PostMapping("/crear")
     public ResponseEntity<?> create(@RequestBody Conocimiento conocimiento) {
         
@@ -49,7 +49,6 @@ public class ConocimientoController {
             
     }
     
-    @CrossOrigin(origins = "*")
     @GetMapping("/getTodos")
     public ResponseEntity<?> getAll() {
         
@@ -67,7 +66,6 @@ public class ConocimientoController {
             
     }
     
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         
@@ -81,7 +79,6 @@ public class ConocimientoController {
             
     }
     
-    @CrossOrigin(origins = "*")
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> edit(@PathVariable Long id,
                                   @RequestParam String nombre,

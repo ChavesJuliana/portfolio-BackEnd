@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.portfolio.portfolio.controller;
-import com.portfolio.portfolio.model.Educacion;
 import com.portfolio.portfolio.model.TipoTrabajo;
-import com.portfolio.portfolio.service.IEducacionService;
 import com.portfolio.portfolio.service.ITipoTrabajoService;
 import java.util.Collections;
 import java.util.List;
@@ -24,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/tipotrabajo")
+@CrossOrigin(origins = "https://portfolio-fronted.web.app/login")
 public class TipoTrabajoController {
     
     @Autowired
     private ITipoTrabajoService tipoTrabajoService;
      
-    @CrossOrigin(origins = "*")
     @GetMapping("/getTodos")
     public ResponseEntity<?> getAll() {
         

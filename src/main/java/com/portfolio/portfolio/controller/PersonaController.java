@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +37,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/persona")
+@CrossOrigin(origins = "https://portfolio-fronted.web.app/login")
 @AllArgsConstructor 
 public class PersonaController {
     
@@ -72,7 +72,6 @@ public class PersonaController {
             
     }
     
-    @CrossOrigin(origins = "*")
     @GetMapping("/media/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException{
         Resource file = storageService.loadAsResource(filename);
@@ -84,7 +83,6 @@ public class PersonaController {
                 .body(file);
     }
         
-    @CrossOrigin(origins = "*")
     @GetMapping("/get/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
         
@@ -112,7 +110,6 @@ public class PersonaController {
             
     }
     
-    @CrossOrigin(origins = "*")
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> edit(@PathVariable Long id,
                                   @RequestParam String nombre,

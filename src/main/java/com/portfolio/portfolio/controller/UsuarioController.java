@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/usuario")
+@CrossOrigin(origins = "https://portfolio-fronted.web.app/login")
 public class UsuarioController {
     
     @Autowired
     private IUsuarioService usuarioService;
     
-    @CrossOrigin(origins = "*")
     @PostMapping("/crear")
     public ResponseEntity<?> crear(@RequestBody Usuario usuario) {
         
